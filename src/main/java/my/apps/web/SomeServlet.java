@@ -1,5 +1,6 @@
 package my.apps.web;
 import my.apps.Recipe;
+import my.apps.db.RecipeRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,8 @@ public class SomeServlet extends HttpServlet {
 
     private int counter;
 
+    private RecipeRepository recipeRepository = new RecipeRepository();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
         counter++;
@@ -32,10 +35,18 @@ public class SomeServlet extends HttpServlet {
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        out.println("<h2>Are you sure? </h2>");
-        out.println("input1 - <b>" + newRecipe.toString() + "</b><br/>");
-        out.println("<a href='/'>Go Back</a>");
+        try {
+            recipeRepository.insert(newRecipe);
+            out.println("inserted - <b>" + newRecipe.toString() + "</b><br/>");
 
+        } catch (ClassNotFoundException e) {
+            out.println("Class not found issues!");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            out.println("SQL exception issues!");
+            e.printStackTrace();
+        }
+        out.println("<a href='/'>Go Back</a>");
         // finished writing, send to browser
         out.close();
 
@@ -44,6 +55,13 @@ public class SomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         counter++;
+        List<Recipe> recipes;
+        try {
+            recipes = recipeRepository.read();
+        } catch (Exception e) {
+            recipes = new ArrayList<>();
+        }
+
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         out.println("<head>");
@@ -51,6 +69,9 @@ public class SomeServlet extends HttpServlet {
         out.println("</head>");
 
         out.println("<h2>Get count</h2>");
+        for(Recipe recipe : recipes) {
+            out.println("<b>" + recipe.toString() + "</b><br />");
+        }
         out.println(counter);
         out.close();
     }
