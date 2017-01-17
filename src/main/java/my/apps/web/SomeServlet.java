@@ -1,4 +1,6 @@
 package my.apps.web;
+import my.apps.Recipe;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/someServlet")
+@WebServlet("/recipes")
 public class SomeServlet extends HttpServlet {
 
     private int counter;
@@ -20,16 +22,18 @@ public class SomeServlet extends HttpServlet {
         counter++;
 
         //get input as string
-        String input1 = request.getParameter("input1");
-        String input2 = request.getParameter("input2");
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String ingredients = request.getParameter("ingredients");
+        String duration = request.getParameter("duration");
 
-        System.out.println(input1 + input2);
+        Recipe newRecipe = new Recipe(ingredients, description, name, duration);
+
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         out.println("<h2>Are you sure? </h2>");
-        out.println("input1 - <b>" + input1 + "</b><br/>");
-        out.println("input2 - <b>" + input2 + "</b><br/>");
+        out.println("input1 - <b>" + newRecipe.toString() + "</b><br/>");
         out.println("<a href='/'>Go Back</a>");
 
         // finished writing, send to browser
