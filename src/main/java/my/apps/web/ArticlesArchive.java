@@ -47,11 +47,15 @@ public class ArticlesArchive extends HttpServlet {
             out.println("<dif class='error'><b>Unable to parse date! Expected format is yyyy-MM-dd but was " + date);
         }
 
-        out.println("<a href='/'>Go Back</a>");
+        addGoBack(out);
 
         // finished writing, send to browser
         out.close();
 
+    }
+
+    private void addGoBack(PrintWriter out) {
+        out.println("<a href='/'>Go Back</a>");
     }
 
     @Override
@@ -76,6 +80,7 @@ public class ArticlesArchive extends HttpServlet {
         } catch (SQLException e) {
             out.println("<div class='error'><b>Unable to write to database! " +  e.getMessage() +"<b></div>");
         }
+        addGoBack(out);
         out.close();
     }
 
