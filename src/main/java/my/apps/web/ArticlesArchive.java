@@ -20,16 +20,18 @@ public class ArticlesArchive extends HttpServlet {
         counter++;
 
         //get input as string
-        String input1 = request.getParameter("input1");
-        String input2 = request.getParameter("input2");
+        String link = request.getParameter("link");
+        String date = request.getParameter("date");
+        String summary = request.getParameter("summary");
+        String domain = request.getParameter("domain");
 
-        System.out.println(input1 + input2);
+        System.out.println(link + date);
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         out.println("<h2>Are you sure? </h2>");
-        out.println("input1 - <b>" + input1 + "</b><br/>");
-        out.println("input2 - <b>" + input2 + "</b><br/>");
+        out.println("input1 - <b>" + link + "</b><br/>");
+        out.println("input2 - <b>" + date + "</b><br/>");
         out.println("<a href='/'>Go Back</a>");
 
         // finished writing, send to browser
