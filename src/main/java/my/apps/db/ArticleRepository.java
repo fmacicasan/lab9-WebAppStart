@@ -18,7 +18,7 @@ public class ArticleRepository {
     final static String USERNAME = "fasttrackit_dev";
     final static String PASSWORD = "fasttrackit_dev";
 
-    public void insert(Article recipe) throws ClassNotFoundException, SQLException {
+    public void insert(Article article) throws ClassNotFoundException, SQLException {
         // 1. load the driver
         Class.forName("org.postgresql.Driver");
 
@@ -27,10 +27,10 @@ public class ArticleRepository {
 
         // 3. create a query statement
         PreparedStatement pSt = conn.prepareStatement("INSERT INTO article( link, domain, summary, date) VALUES (?,?, ?, ?)");
-        pSt.setString(1, recipe.getLink());
-        pSt.setString(2, recipe.getDomain());
-        pSt.setString(3, recipe.getSummary());
-        pSt.setString(4, recipe.getDate());
+        pSt.setString(1, article.getLink());
+        pSt.setString(2, article.getDomain());
+        pSt.setString(3, article.getSummary());
+        pSt.setDate(4, article.getDate());
 
         // 4. execute a prepared statement
         int rowsInserted = pSt.executeUpdate();
@@ -59,7 +59,7 @@ public class ArticleRepository {
         while (rs.next()) {
             Article article = new Article(
                     rs.getString("link"),
-                    rs.getString("date"),
+                    rs.getDate("date"),
                     rs.getString("summary"),
                     rs.getString("domain")
             );

@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/articlesArchive")
@@ -28,15 +28,14 @@ public class ArticlesArchive extends HttpServlet {
         String date = request.getParameter("date");
         String summary = request.getParameter("summary");
         String domain = request.getParameter("domain");
-        Article article = new Article(link, date, summary, domain);
 
-        System.out.println(link + date);
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
-
         try {
+            Date validDate = java.sql.Date.valueOf(date);
+            Article article = new Article(link, validDate, summary, domain);
             out.println("<h3>New article...</h3>");
             articleRepository.insert(article);
             out.println("<b>" + article.toString() +  "</b><br />");
@@ -44,6 +43,8 @@ public class ArticlesArchive extends HttpServlet {
             out.println("<div class='error'><b>Unable initialize database connection<b></div>");
         } catch (SQLException e) {
             out.println("<div class='error'><b>Unable to write to database! " +  e.getMessage() +"<b></div>");
+        } catch (IllegalArgumentException e) {
+            out.println("<dif class='error'><b>Unable to parse date! Expected format is yyyy-MM-dd but was " + date);
         }
 
         out.println("<a href='/'>Go Back</a>");

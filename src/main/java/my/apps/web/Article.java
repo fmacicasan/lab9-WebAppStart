@@ -1,5 +1,7 @@
 package my.apps.web;
 
+import java.sql.Date;
+
 /**
  * @author flo
  * @since 14/02/2017.
@@ -7,11 +9,11 @@ package my.apps.web;
 public class Article {
 
     private String link;
-    private String date;
+    private Date date;
     private String summary;
     private String domain;
 
-    public Article(String link, String date, String summary, String domain) {
+    public Article(String link, Date date, String summary, String domain) {
         this.link = link;
         this.date = date;
         this.summary = summary;
@@ -22,7 +24,7 @@ public class Article {
         return link;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
