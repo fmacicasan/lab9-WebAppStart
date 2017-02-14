@@ -24,14 +24,14 @@ public class ArticlesArchive extends HttpServlet {
         String date = request.getParameter("date");
         String summary = request.getParameter("summary");
         String domain = request.getParameter("domain");
+        Article article = new Article(link, date, summary, domain);
 
         System.out.println(link + date);
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         out.println("<h2>Are you sure? </h2>");
-        out.println("input1 - <b>" + link + "</b><br/>");
-        out.println("input2 - <b>" + date + "</b><br/>");
+        out.println("<b>" + article.toString() +  "</b><br />");
         out.println("<a href='/'>Go Back</a>");
 
         // finished writing, send to browser
