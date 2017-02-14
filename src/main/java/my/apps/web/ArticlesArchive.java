@@ -1,4 +1,6 @@
 package my.apps.web;
+import my.apps.db.ArticleRepository;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +17,8 @@ public class ArticlesArchive extends HttpServlet {
 
     private int counter;
 
+    private ArticleRepository articleRepository = new ArticleRepository();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
         counter++;
@@ -30,9 +34,18 @@ public class ArticlesArchive extends HttpServlet {
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        out.println("<h3>Are you sure? </h3>");
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
-        out.println("<b>" + article.toString() +  "</b><br />");
+
+        try {
+            out.println("<h3>New article...</h3>");
+            articleRepository.insert(article);
+            out.println("<b>" + article.toString() +  "</b><br />");
+        } catch (ClassNotFoundException e) {
+            out.println("<div class='error'><b>Unable initialize database connection<b></div>");
+        } catch (SQLException e) {
+            out.println("<div class='error'><b>Unable to write to database!<b></div>");
+        }
+
         out.println("<a href='/'>Go Back</a>");
 
         // finished writing, send to browser
