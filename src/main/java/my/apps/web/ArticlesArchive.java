@@ -32,7 +32,7 @@ public class ArticlesArchive extends HttpServlet {
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
+        addStyle(out);
         try {
             Date validDate = java.sql.Date.valueOf(date);
             Article article = new Article(link, validDate, summary, domain);
@@ -65,7 +65,7 @@ public class ArticlesArchive extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("<head>");
         out.println("<title> Articles </title>");
-        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
+        addStyle(out);
         out.println("</head>");
         try {
             out.println("<h3>Articles...</h3>");
@@ -96,6 +96,10 @@ public class ArticlesArchive extends HttpServlet {
         }
         addGoBack(out);
         out.close();
+    }
+
+    private void addStyle(PrintWriter out) {
+        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
     }
 
     @Override
