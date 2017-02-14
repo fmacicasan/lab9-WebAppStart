@@ -65,7 +65,11 @@ public class ArticlesArchive extends HttpServlet {
         try {
             out.println("<h2>Get count</h2>");
             out.println(counter);
-            articleRepository.read();
+            List<Article> articles = articleRepository.read();
+            for (Article article : articles) {
+                out.println(article.toString());
+            }
+
         } catch (ClassNotFoundException e) {
             out.println("<div class='error'><b>Unable initialize database connection<b></div>");
         } catch (SQLException e) {
