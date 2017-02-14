@@ -64,16 +64,30 @@ public class ArticlesArchive extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         out.println("<head>");
-        out.println("<title> Get count </title>");
+        out.println("<title> Articles </title>");
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
         out.println("</head>");
         try {
-            out.println("<h2>Get count</h2>");
-            out.println(counter);
+            out.println("<h3>Articles...</h3>");
+            out.println("<table>");
+            out.println("<tr>");
+            out.println("<th>Id</th>");
+            out.println("<th>Domain</th>");
+            out.println("<th>Summary</th>");
+            out.println("<th>Date</th>");
+            out.println("<th>Link</th>");
+            out.println("</tr>");
             List<Article> articles = articleRepository.read();
             for (Article article : articles) {
-                out.println(article.toString());
+                out.println("<tr>");
+                out.println("<td>"+article.getId()+"</td>");
+                out.println("<td>"+article.getDomain()+"</td>");
+                out.println("<td>"+article.getSummary()+"</td>");
+                out.println("<td>"+article.getDate()+"</td>");
+                out.println("<td><a target='_blank' href='"+article.getLink()+"'>open</a></td>");
+                out.println("</tr>");
             }
+            out.println("</table>");
 
         } catch (ClassNotFoundException e) {
             out.println("<div class='error'><b>Unable initialize database connection<b></div>");
