@@ -52,7 +52,7 @@ public class ArticleRepository {
         Statement st = conn.createStatement();
 
         // 4. execute a query
-        ResultSet rs = st.executeQuery("SELECT link, summary, domain, date FROM article");
+        ResultSet rs = st.executeQuery("SELECT id, link, summary, domain, date FROM article");
 
         // 5. iterate the result set and print the values
         List<Article> articles = new ArrayList<>();
@@ -63,6 +63,7 @@ public class ArticleRepository {
                     rs.getString("summary"),
                     rs.getString("domain")
             );
+            article.setId(rs.getLong("id"));
             articles.add(article);
         }
 
