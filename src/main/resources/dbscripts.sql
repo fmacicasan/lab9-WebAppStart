@@ -1,16 +1,9 @@
-CREATE TABLE someTable (
-    idSomeTable bigserial NOT NULL PRIMARY KEY,
-    field1 character(20),
-    field2 int,
-    field3 DATE not null default CURRENT_DATE,
-    field4 numeric(7,2)
+CREATE TABLE foodJournal (
+    id bigserial NOT NULL PRIMARY KEY,
+    date DATE NOT NULL,
+    time character(5),
+    meal character(10),
+    food character(200)
 );
 
-CREATE TABLE someOtherTable (
-    idSomeOtherTable bigserial NOT NULL PRIMARY KEY,
-    field1 character(20),
-    field2 int NOT NULL REFERENCES someTable(idSomeTable)
-);
-
-INSERT INTO sometable( field1, field2, field4) VALUES ('value1', 10, 5.2);
-INSERT INTO someOtherTable( field1, field2) VALUES ('value2', 1);
+INSERT INTO foodJournal( date, time, meal, food) VALUES ('2017-02-19', '09:45', 'breakfast', 'papanasi cu branza de vaca');
