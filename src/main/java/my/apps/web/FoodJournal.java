@@ -130,6 +130,7 @@ public class FoodJournal extends HttpServlet {
                     rs.getString("meal"),
                     rs.getString("food")
             );
+            journalEntry.setId(rs.getLong("id"));
             journalEntries.add(journalEntry);
         }
 

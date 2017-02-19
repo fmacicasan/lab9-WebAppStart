@@ -12,6 +12,7 @@ public class JournalEntry {
     private String time;
     private String meal;
     private String food;
+    private long id;
 
     public JournalEntry(Date date, String time, String meal, String food) {
         this.date = date;
@@ -44,5 +45,13 @@ public class JournalEntry {
 
     public String getFood() {
         return food;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
     }
 }
