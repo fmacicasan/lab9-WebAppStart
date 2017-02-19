@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
+import java.sql.*;
 
 @WebServlet("/foodJournal")
 public class FoodJournal extends HttpServlet {
@@ -71,5 +71,32 @@ public class FoodJournal extends HttpServlet {
     public void destroy() {
         System.out.println("Destroying Servlet! Counter is:" + counter);
         super.destroy();
+    }
+
+    final static String URL = "jdbc:postgresql://IP:5432/test";
+    final static String USERNAME = "fasttrackit_dev";
+    final static String PASSWORD = "fasttrackit_dev";
+
+    public static void insert(Date date, String time, String meal, String food) throws ClassNotFoundException, SQLException {
+        // 1. load the driver
+        Class.forName("org.postgresql.Driver");
+
+        // 2. obtain a connection
+        Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+        // 3. create a query statement
+        PreparedStatement pSt = conn.prepareStatement("INSERT INTO foodJournal( date, time, meal, food) VALUES (?,?, ?, ?)");
+        pSt.setDate(1, date);
+        pSt.setString(2, time);
+        pSt.setString(3, meal);
+        pSt.setString(4, food);
+
+        // 4. execute a prepared statement
+        int rowsInserted = pSt.executeUpdate();
+        System.out.println("Inserted " + rowsInserted + " rows.");
+
+        // 5. close the objects
+        pSt.close();
+        conn.close();
     }
 }
