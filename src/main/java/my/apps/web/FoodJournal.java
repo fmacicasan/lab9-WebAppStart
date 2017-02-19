@@ -64,8 +64,15 @@ public class FoodJournal extends HttpServlet {
         out.println("<title> Get count </title>");
         out.println("</head>");
 
-        out.println("<h2>Get count</h2>");
-        out.println(counter);
+        try {
+            out.println("<h2>Get count</h2>");
+            out.println(counter);
+            read();
+        } catch (ClassNotFoundException e) {
+            out.println("<div class='error'><b>Unable initialize database connection<b></div>");
+        } catch (SQLException e) {
+            out.println("<div class='error'><b>Unable to write to database! " +  e.getMessage() +"<b></div>");
+        }
         out.close();
     }
 
