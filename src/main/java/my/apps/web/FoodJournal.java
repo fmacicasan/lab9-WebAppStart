@@ -62,6 +62,7 @@ public class FoodJournal extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("<head>");
         out.println("<title> My Food Journal </title>");
+        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
         out.println("</head>");
 
         try {
