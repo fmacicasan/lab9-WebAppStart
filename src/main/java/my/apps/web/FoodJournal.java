@@ -36,7 +36,7 @@ public class FoodJournal extends HttpServlet {
             Date validDate = Date.valueOf(date);
             JournalEntry entry = new JournalEntry(validDate, time, meal, food);
             insert(entry);
-            out.println("<b>Inserted new meal" + meal + "</b>");
+            out.println("<b>Inserted new journal entry" + entry + "</b>");
         } catch (IllegalArgumentException e) {
             out.println("<dif class='error'><b>Unable to parse date! Expected format is yyyy-MM-dd but was " + date);
         } catch (ClassNotFoundException e) {
