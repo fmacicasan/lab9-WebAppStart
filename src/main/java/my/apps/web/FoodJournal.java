@@ -20,16 +20,18 @@ public class FoodJournal extends HttpServlet {
         counter++;
 
         //get input as string
-        String input1 = request.getParameter("input1");
-        String input2 = request.getParameter("input2");
+        String date = request.getParameter("date");
+        String time = request.getParameter("time");
+        String meal = request.getParameter("meal");
+        String food = request.getParameter("food");
 
-        System.out.println(input1 + input2);
+        System.out.println(date + time);
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         out.println("<h2>Are you sure? </h2>");
-        out.println("input1 - <b>" + input1 + "</b><br/>");
-        out.println("input2 - <b>" + input2 + "</b><br/>");
+        out.println("input1 - <b>" + date + "</b><br/>");
+        out.println("input2 - <b>" + time + "</b><br/>");
         out.println("<a href='/'>Go Back</a>");
 
         // finished writing, send to browser
