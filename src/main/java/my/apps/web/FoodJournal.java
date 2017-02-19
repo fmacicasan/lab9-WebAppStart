@@ -16,12 +16,8 @@ import java.util.List;
 @WebServlet("/foodJournal")
 public class FoodJournal extends HttpServlet {
 
-    private int counter;
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-        counter++;
-
         //get input as string
         String date = request.getParameter("date");
         String time = request.getParameter("time");
@@ -61,7 +57,6 @@ public class FoodJournal extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        counter++;
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         out.println("<head>");
@@ -106,12 +101,12 @@ public class FoodJournal extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        System.out.println("init() called. Counter is: " + counter);
+        System.out.println("init() called.");
     }
 
     @Override
     public void destroy() {
-        System.out.println("Destroying Servlet! Counter is:" + counter);
+        System.out.println("Destroying Servlet!");
         super.destroy();
     }
 
