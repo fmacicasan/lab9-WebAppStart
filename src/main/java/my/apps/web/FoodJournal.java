@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/someServlet")
-public class SomeServlet extends HttpServlet {
+@WebServlet("/foodJournal")
+public class FoodJournal extends HttpServlet {
 
     private int counter;
 
