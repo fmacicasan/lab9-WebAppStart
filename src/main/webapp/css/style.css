@@ -34,3 +34,7 @@ header {
     min-height: 48px;
     background-color: white;
 }
+
+.error {
+    color: darkred;
+}

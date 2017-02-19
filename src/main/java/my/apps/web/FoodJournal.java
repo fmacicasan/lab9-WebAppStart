@@ -1,4 +1,5 @@
 package my.apps.web;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -6,9 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Date;
 
 @WebServlet("/foodJournal")
 public class FoodJournal extends HttpServlet {
@@ -29,10 +28,18 @@ public class FoodJournal extends HttpServlet {
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        out.println("<h3>Are you sure? </h3>");
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
-        out.println("input1 - <b>" + date + "</b><br/>");
-        out.println("input2 - <b>" + time + "</b><br/>");
+
+        try {
+            Date validDate = Date.valueOf(date);
+            out.println("<h3>Are you sure? </h3>");
+            out.println("input1 - <b>" + date + "</b><br/>");
+            out.println("input2 - <b>" + time + "</b><br/>");
+        } catch (IllegalArgumentException e) {
+            out.println("<dif class='error'><b>Unable to parse date! Expected format is yyyy-MM-dd but was " + date);
+        }
+
+
         out.println("<a href='/'>Go Back</a>");
 
         // finished writing, send to browser
