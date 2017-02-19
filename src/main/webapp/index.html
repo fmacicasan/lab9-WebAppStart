@@ -5,11 +5,18 @@
 
 
 <body>
-    <h2>A servlet example!</h2>
+    <h2>My food journal!</h2>
 
     <form action="someServlet" method="post">
-        Input1:<input type="text" name="input1"/><br />
-        Input2:<input type="text" name="input2"/><br />
+        Date:<input type="text" name="date" placeholder="(e.g 2017-02-19)"/><br />
+        Time:<input type="text" name="time" placeholder="(e.g 17:15)"/><br />
+        Meal:<select name="meal">
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="snack">Snack</option>
+                <option value="dinner">Dinner</option>
+            </select><br />
+        Food:<input type="text" name="food" placeholder="Comma separated food intake."/><br />
         <input type="submit" value="Submit"/>&nbsp;
     </form>
 
