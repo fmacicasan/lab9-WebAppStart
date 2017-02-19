@@ -48,11 +48,15 @@ public class FoodJournal extends HttpServlet {
         }
 
 
-        out.println("<br/><a href='/'>Go Back</a>");
+        addBackButton(out);
 
         // finished writing, send to browser
         out.close();
 
+    }
+
+    private void addBackButton(PrintWriter out) {
+        out.println("<br/><a href='/'>Go Back</a>");
     }
 
     @Override
@@ -91,6 +95,7 @@ public class FoodJournal extends HttpServlet {
         } catch (SQLException e) {
             out.println("<div class='error'><b>Unable to write to database! " +  e.getMessage() +"<b></div>");
         }
+        addBackButton(out);
         out.close();
     }
 
