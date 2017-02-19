@@ -61,13 +61,30 @@ public class FoodJournal extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         out.println("<head>");
-        out.println("<title> Get count </title>");
+        out.println("<title> My Food Journal </title>");
         out.println("</head>");
 
         try {
-            out.println("<h2>Get count</h2>");
-            out.println(counter);
-            read();
+            out.println("<h2>The Food Journal</h2>");
+            out.println("<table>");
+            out.println("<tr>");
+            out.println("<th>Id</th>");
+            out.println("<th>Date</th>");
+            out.println("<th>Time</th>");
+            out.println("<th>Meal</th>");
+            out.println("<th>Food</th>");
+            out.println("</tr>");
+            List<JournalEntry> journalEntries = read();
+            for (JournalEntry journalEntry : journalEntries) {
+                out.println("<tr>");
+                out.println("<td>"+journalEntry.getId()+"</td>");
+                out.println("<td>"+journalEntry.getDate()+"</td>");
+                out.println("<td>"+journalEntry.getTime()+"</td>");
+                out.println("<td>"+journalEntry.getMeal()+"</td>");
+                out.println("<td>"+journalEntry.getFood()+"</td>");
+                out.println("</tr>");
+            }
+            out.println("</table>");
         } catch (ClassNotFoundException e) {
             out.println("<div class='error'><b>Unable initialize database connection<b></div>");
         } catch (SQLException e) {
