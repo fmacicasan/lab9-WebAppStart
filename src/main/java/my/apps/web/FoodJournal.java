@@ -1,5 +1,7 @@
 package my.apps.web;
 
+import my.apps.domain.JournalEntry;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +34,8 @@ public class FoodJournal extends HttpServlet {
 
         try {
             Date validDate = Date.valueOf(date);
-            insert(validDate, time, meal, food);
+            JournalEntry entry = new JournalEntry(validDate, time, meal, food);
+            insert(entry);
             out.println("<b>Inserted new meal" + meal + "</b>");
         } catch (IllegalArgumentException e) {
             out.println("<dif class='error'><b>Unable to parse date! Expected format is yyyy-MM-dd but was " + date);
@@ -80,7 +83,7 @@ public class FoodJournal extends HttpServlet {
     final static String USERNAME = "fasttrackit_dev";
     final static String PASSWORD = "fasttrackit_dev";
 
-    public static void insert(Date date, String time, String meal, String food) throws ClassNotFoundException, SQLException {
+    public static void insert(JournalEntry entry) throws ClassNotFoundException, SQLException {
         // 1. load the driver
         Class.forName("org.postgresql.Driver");
 
@@ -89,10 +92,10 @@ public class FoodJournal extends HttpServlet {
 
         // 3. create a query statement
         PreparedStatement pSt = conn.prepareStatement("INSERT INTO foodJournal( date, time, meal, food) VALUES (?,?, ?, ?)");
-        pSt.setDate(1, date);
-        pSt.setString(2, time);
-        pSt.setString(3, meal);
-        pSt.setString(4, food);
+        pSt.setDate(1, entry.getDate());
+        pSt.setString(2, entry.getTime());
+        pSt.setString(3, entry.getMeal());
+        pSt.setString(4, entry.getFood());
 
         // 4. execute a prepared statement
         int rowsInserted = pSt.executeUpdate();
