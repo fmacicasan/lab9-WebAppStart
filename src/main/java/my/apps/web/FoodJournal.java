@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/foodJournal")
 public class FoodJournal extends HttpServlet {
@@ -104,5 +106,37 @@ public class FoodJournal extends HttpServlet {
         // 5. close the objects
         pSt.close();
         conn.close();
+    }
+
+    public static List<JournalEntry> read() throws ClassNotFoundException, SQLException {
+        // 1. load the driver
+        Class.forName("org.postgresql.Driver");
+
+        // 2. obtain a connection
+        Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+        // 3. create a query statement
+        Statement st = conn.createStatement();
+
+        // 4. execute a query
+        ResultSet rs = st.executeQuery("SELECT id, date, time, meal, food FROM foodJournal");
+
+        // 5. iterate the result set and print the values
+        List<JournalEntry> journalEntries = new ArrayList<>();
+        while (rs.next()) {
+            JournalEntry journalEntry = new JournalEntry(
+                    rs.getDate("date"),
+                    rs.getString("time"),
+                    rs.getString("meal"),
+                    rs.getString("food")
+            );
+            journalEntries.add(journalEntry);
+        }
+
+        // 6. close the objects
+        rs.close();
+        st.close();
+        conn.close();
+        return journalEntries;
     }
 }
