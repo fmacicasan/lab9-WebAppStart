@@ -29,7 +29,8 @@ public class FoodJournal extends HttpServlet {
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        out.println("<h2>Are you sure? </h2>");
+        out.println("<h3>Are you sure? </h3>");
+        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
         out.println("input1 - <b>" + date + "</b><br/>");
         out.println("input2 - <b>" + time + "</b><br/>");
         out.println("<a href='/'>Go Back</a>");
