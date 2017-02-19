@@ -32,7 +32,7 @@ public class FoodJournal extends HttpServlet {
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
+        addStyle(out);
 
         try {
             Date validDate = Date.valueOf(date);
@@ -62,7 +62,7 @@ public class FoodJournal extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("<head>");
         out.println("<title> My Food Journal </title>");
-        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
+        addStyle(out);
         out.println("</head>");
 
         try {
@@ -92,6 +92,10 @@ public class FoodJournal extends HttpServlet {
             out.println("<div class='error'><b>Unable to write to database! " +  e.getMessage() +"<b></div>");
         }
         out.close();
+    }
+
+    private void addStyle(PrintWriter out) {
+        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">");
     }
 
     @Override
