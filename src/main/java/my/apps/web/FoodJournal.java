@@ -32,15 +32,18 @@ public class FoodJournal extends HttpServlet {
 
         try {
             Date validDate = Date.valueOf(date);
-            out.println("<h3>Are you sure? </h3>");
-            out.println("input1 - <b>" + date + "</b><br/>");
-            out.println("input2 - <b>" + time + "</b><br/>");
+            insert(validDate, time, meal, food);
+            out.println("<b>Inserted new meal" + meal + "</b>");
         } catch (IllegalArgumentException e) {
             out.println("<dif class='error'><b>Unable to parse date! Expected format is yyyy-MM-dd but was " + date);
+        } catch (ClassNotFoundException e) {
+            out.println("<div class='error'><b>Unable initialize database connection<b></div>");
+        } catch (SQLException e) {
+            out.println("<div class='error'><b>Unable to write to database! " +  e.getMessage() +"<b></div>");
         }
 
 
-        out.println("<a href='/'>Go Back</a>");
+        out.println("<br/><a href='/'>Go Back</a>");
 
         // finished writing, send to browser
         out.close();
