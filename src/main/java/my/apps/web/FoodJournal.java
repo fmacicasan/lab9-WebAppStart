@@ -1,7 +1,7 @@
 package my.apps.web;
 
-import my.apps.db.FoodJournalRepository;
 import my.apps.domain.JournalEntry;
+import my.apps.service.JournalService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/foodJournal")
 public class FoodJournal extends HttpServlet {
+
+    private JournalService journalService = new JournalService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,8 +35,7 @@ public class FoodJournal extends HttpServlet {
 
         try {
             Date validDate = Date.valueOf(date);
-            JournalEntry entry = new JournalEntry(validDate, time, meal, food);
-            FoodJournalRepository.insert(entry);
+            JournalEntry entry = journalService.addEntry(validDate, time, meal, food);
             out.println("<b>Inserted new journal entry" + entry + "</b>");
         } catch (IllegalArgumentException e) {
             out.println("<dif class='error'><b>Unable to parse date! Expected format is yyyy-MM-dd but was " + date);
@@ -53,7 +54,7 @@ public class FoodJournal extends HttpServlet {
     }
 
     private void addBackButton(PrintWriter out) {
-        out.println("<br/><a href='/'>Go Back</a>");
+        out.println("<br/><a href='/web_app_start_war_exploded'>Go Back</a>");
     }
 
     @Override
@@ -75,7 +76,7 @@ public class FoodJournal extends HttpServlet {
             out.println("<th>Meal</th>");
             out.println("<th>Food</th>");
             out.println("</tr>");
-            List<JournalEntry> journalEntries = FoodJournalRepository.read();
+            List<JournalEntry> journalEntries = journalService.listJournal();
             for (JournalEntry journalEntry : journalEntries) {
                 out.println("<tr>");
                 out.println("<td>"+journalEntry.getId()+"</td>");

@@ -13,11 +13,11 @@ import java.util.List;
 public class FoodJournalRepository {
 
 
-    final static String URL = "jdbc:postgresql://IP:5432/test";
-    final static String USERNAME = "fasttrackit_dev";
-    final static String PASSWORD = "fasttrackit_dev";
+    final static String URL = "jdbc:postgresql://localhost:5432/lab17";
+    final static String USERNAME = "postgres";
+    final static String PASSWORD = System.getenv("POSTGRES_PASSWORD");
 
-    public static void insert(JournalEntry entry) throws ClassNotFoundException, SQLException {
+    public void insert(JournalEntry entry) throws ClassNotFoundException, SQLException {
         // 1. load the driver
         Class.forName("org.postgresql.Driver");
 
@@ -40,7 +40,7 @@ public class FoodJournalRepository {
         conn.close();
     }
 
-    public static List<JournalEntry> read() throws ClassNotFoundException, SQLException {
+    public List<JournalEntry> read() throws ClassNotFoundException, SQLException {
         // 1. load the driver
         Class.forName("org.postgresql.Driver");
 

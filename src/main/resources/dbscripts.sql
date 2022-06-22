@@ -6,4 +6,4 @@ CREATE TABLE foodJournal (
     food character(200)
 );
 
-INSERT INTO foodJournal( date, time, meal, food) VALUES ('2017-02-19', '09:45', 'breakfast', 'papanasi cu branza de vaca');
+INSERT INTO foodJournal( date, time, meal, food) VALUES ('2022-06-19', '09:45', 'breakfast', 'papanasi cu branza de vaca');
