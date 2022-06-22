@@ -1,5 +1,6 @@
 package my.apps.web;
-import my.apps.db.ArticleRepository;
+import my.apps.domain.Article;
+import my.apps.service.ArticleService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +17,7 @@ import java.util.List;
 public class ArticlesArchive extends HttpServlet {
 
     private int counter;
-
-    private ArticleRepository articleRepository = new ArticleRepository();
+    private ArticleService articleService = new ArticleService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,9 +35,9 @@ public class ArticlesArchive extends HttpServlet {
         addStyle(out);
         try {
             Date validDate = java.sql.Date.valueOf(date);
-            Article article = new Article(link, validDate, summary, domain);
+
             out.println("<h3>New article...</h3>");
-            articleRepository.insert(article);
+            Article article = articleService.addArticle(link, validDate, summary, domain);
             out.println("<b>" + article.toString() +  "</b><br />");
         } catch (ClassNotFoundException e) {
             out.println("<div class='error'><b>Unable initialize database connection<b></div>");
@@ -77,7 +77,7 @@ public class ArticlesArchive extends HttpServlet {
             out.println("<th>Date</th>");
             out.println("<th>Link</th>");
             out.println("</tr>");
-            List<Article> articles = articleRepository.read();
+            List<Article> articles = articleService.list();
             for (Article article : articles) {
                 out.println("<tr>");
                 out.println("<td>"+article.getId()+"</td>");

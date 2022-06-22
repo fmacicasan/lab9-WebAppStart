@@ -1,6 +1,6 @@
 package my.apps.db;
 
-import my.apps.web.Article;
+import my.apps.domain.Article;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,9 +14,9 @@ import java.util.List;
 public class ArticleRepository {
 
     // 1. define connection params to db
-    final static String URL = "jdbc:postgresql://IP:5432/test";
-    final static String USERNAME = "fasttrackit_dev";
-    final static String PASSWORD = "fasttrackit_dev";
+    final static String URL = "jdbc:postgresql://localhost:5432/lab17";
+    final static String USERNAME = "postgres";
+    final static String PASSWORD = System.getenv("POSTGRES_PASSWORD");
 
     public void insert(Article article) throws ClassNotFoundException, SQLException {
         // 1. load the driver
