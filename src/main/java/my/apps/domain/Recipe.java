@@ -1,4 +1,4 @@
-package my.apps;
+package my.apps.domain;
 
 /**
  * @author flo

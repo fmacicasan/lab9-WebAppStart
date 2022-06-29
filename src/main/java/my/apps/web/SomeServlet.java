@@ -1,6 +1,7 @@
 package my.apps.web;
-import my.apps.Recipe;
 import my.apps.db.RecipeRepository;
+import my.apps.domain.Recipe;
+import my.apps.service.RecipeService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +19,7 @@ public class SomeServlet extends HttpServlet {
 
     private int counter;
 
-    private RecipeRepository recipeRepository = new RecipeRepository();
+    private RecipeService recipeService = new RecipeService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,13 +31,13 @@ public class SomeServlet extends HttpServlet {
         String ingredients = request.getParameter("ingredients");
         String duration = request.getParameter("duration");
 
-        Recipe newRecipe = new Recipe(ingredients, description, name, duration);
+
 
         // write results to response
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
         try {
-            recipeRepository.insert(newRecipe);
+            Recipe newRecipe = recipeService.insert(ingredients, description, name, duration);
             out.println("inserted - <b>" + newRecipe.toString() + "</b><br/>");
 
         } catch (ClassNotFoundException e) {
@@ -57,7 +58,7 @@ public class SomeServlet extends HttpServlet {
         counter++;
         List<Recipe> recipes;
         try {
-            recipes = recipeRepository.read();
+            recipes = recipeService.listAll();
         } catch (Exception e) {
             recipes = new ArrayList<>();
         }
